@@ -1,0 +1,67 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML5 Game Development</title>
+</head>
+
+<body>
+    <div id="body">
+    </div>
+
+    <script>
+        var canvas = null;
+        var context = null;
+        var
+            frame = 0,
+            framerate = 1000 / 12;
+        var frames = [];
+        var assets = [
+            'images/sprites/coin/0.png',
+            'images/sprites/coin/1.png',
+            'images/sprites/coin/2.png',
+            'images/sprites/coin/3.png',
+            'images/sprites/coin/4.png',
+            'images/sprites/coin/5.png',
+            'images/sprites/coin/6.png',
+            'images/sprites/coin/7.png',
+            'images/sprites/coin/8.png'
+        ];
+
+        var onImageLoad = function () {
+            console.log("IMAGE!!!");
+        };
+
+        var setup = function () {
+            var body = document.getElementById("body");
+            canvas = document.createElement("canvas");
+
+            context = canvas.getContext('2d');
+            canvas.setAttribute('width', window.innerWidth);
+            canvas.setAttribute('height', window.innerHeight);
+
+            body.appendChild(canvas);
+
+            for (var i = 0; i < assets.length; i++) {
+                var img = new Image();
+                frames.push(img);
+                frames[i].src = assets[i];
+                frames[i].onload = onImageLoad;
+            }
+
+            setInterval(animate, framerate);
+        };
+
+        var animate = function () {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.drawImage(frames[frame], (window.innerWidth / 2), (window.innerHeight / 2));
+            frame = (frame + 1) % frames.length;
+        };
+
+        setup();
+    </script>
+</body>
+
+</html>
